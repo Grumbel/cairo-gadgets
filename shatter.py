@@ -65,10 +65,29 @@ class Screen(gtk.DrawingArea):
              random.random(),
              random.random()]
 
-        x = random.randint(0, width)
-        y = random.randint(0, height/2)
-        radius = random.randint(5, 32)
+        xof = (random.random()-0.5) * 2.0
+        yof = (random.random()-0.5) * 2.0
 
+        for i in range(0, random.randint(1, 2)):
+            x = random.randint(0, width)
+            y = random.randint(0, height/2)
+            radius = random.randint(5, 72)
+
+            self.draw_moon(cr, x, y, radius, xof * radius, yof * radius, 
+                           [c[0] * (1.0 - random.random()/10.0), 
+                            c[1] * (1.0 - random.random()/10.0), 
+                            c[2] * (1.0 - random.random()/10.0)])
+
+        y = height / 2.0 * 1.5
+        n = 64
+
+        for i in range(0, n):
+            cr.set_source_rgb(((i+1)/float(n) * c[0]) ** 2.2,
+                              ((i+1)/float(n) * c[1]) ** 2.2,
+                              ((i+1)/float(n) * c[2]) ** 2.2)
+            self.draw_mountain(cr, y + 2**(7.0 * (float(i)/(n-1))), width, height)
+
+    def draw_moon(self, cr, x, y, radius, xof, yof, c):
         cr.set_source_rgb(c[0], c[1], c[2])
         cr.arc(x, y, radius * 1.1, 0.0, 2 * math.pi)
         cr.fill()
@@ -83,27 +102,18 @@ class Screen(gtk.DrawingArea):
 
         cr.new_path()
         cr.set_source_rgb(0, 0, 0)
-        cr.arc(x + (random.random()-0.5) * radius*2.0, 
-               y + (random.random()-0.5) * radius*2.0,
+        cr.arc(x + xof,
+               y + yof,
                radius * 1.5, 0.0, 2 * math.pi)
         cr.fill()
         # cr.reset_clip()
-        cr.restore()
-
-        y = height / 2.0 * 1.5
-        n = 64
-
-        for i in range(0, n):
-            cr.set_source_rgb((i+1)/float(n) * c[0],
-                              (i+1)/float(n) * c[1],
-                              (i+1)/float(n) * c[2])
-            self.draw_mountain(cr, y + 2**(7.0 * (float(i)/(n-1))), width, height)
+        cr.restore()       
 
     def draw_mountain(self, cr, y, width, height):
         points = gen_segments(y + (random.random()-0.5) * 128.0,
                               y + (random.random()-0.5) * 128.0,
                               8, 
-                              lambda a, b, d: (a+b)/2.0 + (random.random()-0.5) * 128.0 / 2**d)
+                              lambda a, b, d: (a+b)/2.0 + (random.random()-0.5) * (height/3.0) / 2**d)
 
         cr.move_to(0, height)
         for idx, p in enumerate(points):
@@ -116,9 +126,22 @@ def run(Widget):
     window = gtk.Window()
     window.set_size_request(640, 480)
     window.connect("delete-event", gtk.main_quit)
+
+    vbox = gtk.VBox()
+
     widget = Widget()
     widget.show()
-    window.add(widget)
+
+    button = gtk.Button("Regenerate")
+    button.connect("clicked", lambda ev: widget.queue_draw())
+    button.show()
+
+    vbox.pack_start(widget, True, True)
+    vbox.pack_start(button, False, True)
+    vbox.show()
+
+    window.add(vbox)
+
     window.present()
     gtk.main()
 
