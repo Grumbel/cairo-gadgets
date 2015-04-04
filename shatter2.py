@@ -14,7 +14,7 @@ def midpoint(lst):
     return (x / len(lst), y / len(lst))
 
 def jitter(p, r):
-    return (p[0] + (random.random() * 2.0 - 1.0) * r, 
+    return (p[0] + (random.random() * 2.0 - 1.0) * r,
             p[1] + (random.random() * 2.0 - 1.0) * r)
 
 # Create a GTK+ widget on which we will draw using Cairo

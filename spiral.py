@@ -34,9 +34,9 @@ class Screen(gtk.DrawingArea):
         cr.fill()
 
         self.draw_spiral(cr,
-                         width/2.0, height/5.0*4.0, 
+                         width/2.0, height/5.0*4.0,
                          0,
-                         width/2.0, 
+                         width/2.0,
                          random.random() * 0.1 + 0.1)
 
     def draw_spiral(self, cr, x, y, angle, length, angle_delta):
@@ -52,9 +52,9 @@ class Screen(gtk.DrawingArea):
             #                  random.random())
             # cr.set_line_width(2.0)
             cr.set_source_rgb(1,1,1)
-            cr.move_to(x, 
+            cr.move_to(x,
                        y)
-            cr.line_to(x + dx, 
+            cr.line_to(x + dx,
                        y + dy)
             cr.stroke()
 
@@ -62,14 +62,14 @@ class Screen(gtk.DrawingArea):
                 self.draw_spiral(cr,
                                  x + dx,
                                  y + dy,
-                                 nangle, 
+                                 nangle,
                                  length - seg,
                                  -angle_delta)
 
             self.draw_spiral(cr,
                              x + dx,
                              y + dy,
-                             nangle, 
+                             nangle,
                              length - seg,
                              angle_delta)
 

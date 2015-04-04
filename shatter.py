@@ -15,7 +15,7 @@ def midpoint(lst):
     return (x / len(lst), y / len(lst))
 
 def jitter(p, r):
-    return (p[0] + (random.random() * 2.0 - 1.0) * r, 
+    return (p[0] + (random.random() * 2.0 - 1.0) * r,
             p[1] + (random.random() * 2.0 - 1.0) * r)
 
 def gen_segments(a, b, depth, midfunc):
@@ -73,9 +73,9 @@ class Screen(gtk.DrawingArea):
             y = random.randint(0, height/2)
             radius = random.randint(5, 72)
 
-            self.draw_moon(cr, x, y, radius, xof * radius, yof * radius, 
-                           [c[0] * (1.0 - random.random()/10.0), 
-                            c[1] * (1.0 - random.random()/10.0), 
+            self.draw_moon(cr, x, y, radius, xof * radius, yof * radius,
+                           [c[0] * (1.0 - random.random()/10.0),
+                            c[1] * (1.0 - random.random()/10.0),
                             c[2] * (1.0 - random.random()/10.0)])
 
         y = height / 2.0 * 1.5
@@ -95,7 +95,7 @@ class Screen(gtk.DrawingArea):
         cr.set_source_rgb(c[0]*2.0, c[1]*2.0, c[2]*2.0)
         cr.arc(x, y, radius, 0.0, 2 * math.pi)
         cr.fill()
-        
+
         cr.save()
         cr.arc(x, y, radius * 1.2, 0.0, 2 * math.pi)
         cr.clip()
@@ -107,19 +107,19 @@ class Screen(gtk.DrawingArea):
                radius * 1.5, 0.0, 2 * math.pi)
         cr.fill()
         # cr.reset_clip()
-        cr.restore()       
+        cr.restore()
 
     def draw_mountain(self, cr, y, width, height):
         points = gen_segments(y + (random.random()-0.5) * 128.0,
                               y + (random.random()-0.5) * 128.0,
-                              8, 
+                              8,
                               lambda a, b, d: (a+b)/2.0 + (random.random()-0.5) * (height/3.0) / 2**d)
 
         cr.move_to(0, height)
         for idx, p in enumerate(points):
             cr.line_to(width/float(len(points)-1) * idx, p)
         cr.line_to(width, height)
-        cr.fill()       
+        cr.fill()
 
 # GTK mumbo-jumbo to show the widget in a window and quit when it's closed
 def run(Widget):
