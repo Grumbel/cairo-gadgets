@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # cairo-gadgets - A collection of gadgets for cairo
 # Copyright (C) 2015 Ingo Ruhnke <grumbel@gmail.com>
@@ -16,18 +16,19 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import gtk
-import gobject
+
 import math
 import time
+from gi.repository import Gtk
+from gi.repository import GObject
 
 
 class ShapedGUI:
 
     def __init__(self):
-        self.window = gtk.Window()
-        self.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)
-        self.drawing_area = gtk.DrawingArea()
+        self.window = Gtk.Window()
+
+        self.drawing_area = Gtk.DrawingArea()
 
         self.drawing_area.set_size_request(854, 480)
         self.window.add(self.drawing_area)
@@ -35,30 +36,21 @@ class ShapedGUI:
         self.drawing_area.show()
         self.window.show()  # We show here so the window gets a border on it by the WM
 
-        self.drawing_area.connect('expose-event', self.do_expose_event)
+        self.drawing_area.connect('draw', self.do_expose_event)
 
-        x, y, w, h = self.window.get_allocation()
-        self.window.set_size_request(w, h)
-        # self.window.connect('size-allocate', self.reshapecircle)
+        rect = self.window.get_allocation()
+        self.window.set_size_request(rect.width, rect.height)
         self.window.show()
 
         def foo():
             self.window.queue_draw()
             return True
-        gobject.timeout_add(20, foo)
+        GObject.timeout_add(20, foo)
 
         self.count = 0
 
-    def do_expose_event(self, drawing_area, event):
-        # Create the cairo context
-        cr = drawing_area.window.cairo_create()
-
-        # Restrict Cairo to the exposed area; avoid extra work
-        cr.rectangle(event.area.x, event.area.y,
-                     event.area.width, event.area.height)
-        cr.clip()
-
-        self.draw(cr, *self.drawing_area.window.get_size())
+    def do_expose_event(self, drawing_area, cr):
+        self.draw(cr, drawing_area.get_allocated_width(), drawing_area.get_allocated_height())
 
     def draw(self, cr, width, height):
         # Fill the background with gray
@@ -101,7 +93,7 @@ class ShapedGUI:
         self.count += 1
 
 shapedWin = ShapedGUI()
-shapedWin.window.connect("destroy", lambda w: gtk.main_quit())
-gtk.main()
+shapedWin.window.connect("destroy", lambda w: Gtk.main_quit())
+Gtk.main()
 
 # EOF #
