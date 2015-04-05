@@ -39,8 +39,8 @@ def jitter(p, r):
 class Screen(Gtk.DrawingArea):
 
     # Handle the expose-event by drawing
-    def do_draw(self, widget, cr):
-        self.draw(cr, widget.get_allocated_width(), widget.get_allocated_height())
+    def do_draw(self, cr):
+        self.draw(cr, self.get_allocated_width(), self.get_allocated_height())
 
     def draw(self, cr, width, height):
         # Fill the background with gray
