@@ -21,6 +21,8 @@ import random
 import math
 from gi.repository import Gtk
 
+from canvas import Canvas
+
 
 def midpoint(lst):
     x = 0.0
@@ -47,20 +49,19 @@ def gen_segments(a, b, depth, midfunc):
     return loop(a, b, depth) + [b]
 
 
-def draw_landscape(cr):
-    width = cr.get_group_target().get_width()
-    height = cr.get_group_target().get_height()
+def draw_landscape(canvas):
+    cr = canvas.cr
 
     # Fill the background with gray
     cr.set_source_rgb(0.0, 0.0, 0.0)
-    cr.rectangle(0, 0, width, height)
+    cr.rectangle(0, 0, canvas.width, canvas.height)
     cr.fill()
 
     for i in range(0, 500):
         gray = random.random()
         cr.set_source_rgb(gray, gray, gray)
-        cr.arc(width * random.random() + 0.5,
-               height * random.random() + 0.5,
+        cr.arc(canvas.width * random.random() + 0.5,
+               canvas.height * random.random() + 0.5,
                0.1, 0.0, 2 * math.pi)
         cr.stroke()
 
@@ -72,26 +73,28 @@ def draw_landscape(cr):
     yof = (random.random() - 0.5) * 2.0
 
     for i in range(0, random.randint(1, 2)):
-        x = random.randint(0, width)
-        y = random.randint(0, height // 2)
+        x = random.randint(0, canvas.width)
+        y = random.randint(0, canvas.height // 2)
         radius = random.randint(5, 72)
 
-        draw_moon(cr, x, y, radius, xof * radius, yof * radius,
+        draw_moon(canvas, x, y, radius, xof * radius, yof * radius,
                   [c[0] * (1.0 - random.random() / 10.0),
                    c[1] * (1.0 - random.random() / 10.0),
                    c[2] * (1.0 - random.random() / 10.0)])
 
-    y = height / 2.0 * 1.5
+    y = canvas.height / 2.0 * 1.5
     n = 64
 
     for i in range(0, n):
         cr.set_source_rgb(((i + 1) / float(n) * c[0]) ** 2.2,
                           ((i + 1) / float(n) * c[1]) ** 2.2,
                           ((i + 1) / float(n) * c[2]) ** 2.2)
-        draw_mountain(cr, y + 2 ** (7.0 * (float(i) / (n - 1))), width, height)
+        draw_mountain(canvas, y + 2 ** (7.0 * (float(i) / (n - 1))))
 
 
-def draw_moon(cr, x, y, radius, xof, yof, c):
+def draw_moon(canvas, x, y, radius, xof, yof, c):
+    cr = canvas.cr
+
     cr.set_source_rgb(c[0], c[1], c[2])
     cr.arc(x, y, radius * 1.1, 0.0, 2 * math.pi)
     cr.fill()
@@ -114,19 +117,18 @@ def draw_moon(cr, x, y, radius, xof, yof, c):
     cr.restore()
 
 
-def draw_mountain(cr, y, width, height):
-    width = cr.get_group_target().get_width()
-    height = cr.get_group_target().get_height()
+def draw_mountain(canvas, y):
+    cr = canvas.cr
 
     points = gen_segments(y + (random.random() - 0.5) * 128.0,
                           y + (random.random() - 0.5) * 128.0,
                           8,
-                          lambda a, b, d: (a + b) / 2.0 + (random.random() - 0.5) * (height / 3.0) / 2 ** d)
+                          lambda a, b, d: (a + b) / 2.0 + (random.random() - 0.5) * (canvas.height / 3.0) / 2 ** d)
 
-    cr.move_to(0, height)
+    cr.move_to(0, canvas.height)
     for idx, p in enumerate(points):
-        cr.line_to(width / float(len(points) - 1) * idx, p)
-    cr.line_to(width, height)
+        cr.line_to(canvas.width / float(len(points) - 1) * idx, p)
+    cr.line_to(canvas.width, canvas.height)
     cr.fill()
 
 
@@ -140,7 +142,9 @@ def main():
     widget = Gtk.DrawingArea()
     widget.show()
 
-    widget.connect("draw", lambda widget, cr: draw_landscape(cr))
+    widget.connect("draw", lambda widget, cr: draw_landscape(Canvas(cr,
+                                                                    widget.get_allocated_width(),
+                                                                    widget.get_allocated_height())))
 
     button = Gtk.Button("Regenerate")
     button.connect("clicked", lambda ev: widget.queue_draw())

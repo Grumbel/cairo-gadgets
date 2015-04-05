@@ -21,24 +21,27 @@ from gi.repository import Gtk
 import random
 import math
 
+from canvas import Canvas
 
-def draw_spirals(cr):
-    width = cr.get_group_target().get_width()
-    height = cr.get_group_target().get_height()
+
+def draw_spirals(canvas):
+    cr = canvas.cr
 
     # Fill the background with gray
     cr.set_source_rgb(0.0, 0.0, 0.0)
-    cr.rectangle(0, 0, width, height)
+    cr.rectangle(0, 0, canvas.width, canvas.height)
     cr.fill()
 
-    draw_spiral(cr,
-                width / 2.0, height / 5.0 * 4.0,
+    draw_spiral(canvas,
+                canvas.width / 2.0, canvas.height / 5.0 * 4.0,
                 0,
-                width / 2.0,
+                canvas.width / 2.0,
                 random.random() * 0.1 + 0.1)
 
 
-def draw_spiral(cr, x, y, angle, length, angle_delta):
+def draw_spiral(canvas, x, y, angle, length, angle_delta):
+    cr = canvas.cr
+
     if length > 20.0:
         nangle = angle + angle_delta
         seg = length / 30.0
@@ -58,14 +61,14 @@ def draw_spiral(cr, x, y, angle, length, angle_delta):
         cr.stroke()
 
         if random.randint(0, 15) == 0:
-            draw_spiral(cr,
+            draw_spiral(canvas,
                         x + dx,
                         y + dy,
                         nangle,
                         length - seg,
                         -angle_delta)
 
-        draw_spiral(cr,
+        draw_spiral(canvas,
                     x + dx,
                     y + dy,
                     nangle,
@@ -83,7 +86,10 @@ def main():
     widget = Gtk.DrawingArea()
     widget.show()
 
-    widget.connect("draw", lambda widget, cr: draw_spirals(cr))
+    widget.connect("draw",
+                   lambda widget, cr: draw_spirals(Canvas(cr,
+                                                          widget.get_allocated_width(),
+                                                          widget.get_allocated_height())))
 
     button = Gtk.Button("Regenerate")
     button.connect("clicked", lambda ev: widget.queue_draw())
