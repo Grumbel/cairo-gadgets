@@ -17,11 +17,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import pygtk
-pygtk.require('2.0')
-import gtk
 import random
 import math
+from gi.repository import Gtk
 
 
 def midpoint(lst):
@@ -51,23 +49,15 @@ def gen_segments(a, b, depth, midfunc):
 # Create a GTK+ widget on which we will draw using Cairo
 
 
-class Screen(gtk.DrawingArea):
+class Screen(Gtk.DrawingArea):
 
-    # Draw in response to an expose-event
-    __gsignals__ = {"expose-event": "override"}
+    def __init__(self):
+        super().__init__()
 
-    # Handle the expose-event by drawing
-    def do_expose_event(self, event):
-
-        # Create the cairo context
-        cr = self.window.cairo_create()
-
-        # Restrict Cairo to the exposed area; avoid extra work
-        cr.rectangle(event.area.x, event.area.y,
-                     event.area.width, event.area.height)
-        cr.clip()
-
-        self.draw(cr, *self.window.get_size())
+    def do_draw(self, cr):
+        self.draw(cr,
+                  int(self.get_allocated_width()),
+                  int(self.get_allocated_height()))
 
     def draw(self, cr, width, height):
         # Fill the background with gray
@@ -92,7 +82,7 @@ class Screen(gtk.DrawingArea):
 
         for i in range(0, random.randint(1, 2)):
             x = random.randint(0, width)
-            y = random.randint(0, height / 2)
+            y = random.randint(0, height // 2)
             radius = random.randint(5, 72)
 
             self.draw_moon(cr, x, y, radius, xof * radius, yof * radius,
@@ -147,29 +137,31 @@ class Screen(gtk.DrawingArea):
 
 
 def run(Widget):
-    window = gtk.Window()
+    window = Gtk.Window()
     window.set_size_request(640, 480)
-    window.connect("delete-event", gtk.main_quit)
+    window.connect("delete-event", Gtk.main_quit)
 
-    vbox = gtk.VBox()
+    vbox = Gtk.VBox()
 
     widget = Widget()
     widget.show()
 
-    button = gtk.Button("Regenerate")
+    button = Gtk.Button("Regenerate")
     button.connect("clicked", lambda ev: widget.queue_draw())
     button.show()
 
-    vbox.pack_start(widget, True, True)
-    vbox.pack_start(button, False, True)
+    vbox.pack_start(widget, True, True, 0)
+    vbox.pack_start(button, False, True, 0)
     vbox.show()
 
     window.add(vbox)
 
     window.present()
-    gtk.main()
+    Gtk.main()
+
 
 if __name__ == "__main__":
     run(Screen)
+
 
 # EOF #
