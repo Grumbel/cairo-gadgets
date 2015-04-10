@@ -48,10 +48,7 @@ def gen_segments(a, b, depth, midfunc):
     return loop(a, b, depth) + [b]
 
 
-class LandscapeApplet(Applet):
-
-    def setup(self):
-        self.set_size(640, 480)
+class Landscape:
 
     def draw(self, canvas):
         cr = canvas.cr
@@ -135,8 +132,9 @@ class LandscapeApplet(Applet):
 
 
 if __name__ == "__main__":
-    applet = LandscapeApplet()
-    applet.run()
+    applet = Applet()
+    applet.set_size(640, 480)
+    applet.run(Landscape().draw)
 
 
 # EOF #

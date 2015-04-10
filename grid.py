@@ -18,16 +18,11 @@
 
 
 import random
-import math
 
 from applet import Applet
 
 
-class GridApplet(Applet):
-
-    def setup(self):
-        self.set_title("Grid Effect")
-        self.set_size(640, 480)
+class GridGadget:
 
     def draw(self, canvas):
         cr = canvas.cr
@@ -66,8 +61,10 @@ class GridApplet(Applet):
 
 
 if __name__ == "__main__":
-    applet = GridApplet()
-    applet.run()
+    applet = Applet()
+    applet.set_title("Grid Effect")
+    applet.set_size(640, 480)
+    applet.run(GridGadget().draw)
 
 
 # EOF #

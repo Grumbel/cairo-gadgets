@@ -23,10 +23,7 @@ import math
 from applet import Applet
 
 
-class SpiralApplet(Applet):
-
-    def setup(self):
-        self.set_size(640, 480)
+class Spiral:
 
     def draw(self, canvas):
         cr = canvas.cr
@@ -80,8 +77,9 @@ class SpiralApplet(Applet):
 
 
 if __name__ == "__main__":
-    applet = SpiralApplet()
-    applet.run()
+    applet = Applet()
+    applet.set_size(640, 480)
+    applet.run(Spiral().draw)
 
 
 # EOF #

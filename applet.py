@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from gi.repository import Gtk
+from gi.repository import Gtk, GObject
 from canvas import Canvas
 
 
@@ -31,10 +31,7 @@ class Applet:
         self.drawing_area = Gtk.DrawingArea()
         self.drawing_area.show()
 
-        self.drawing_area.connect("draw", self.__on_draw)
-
-        self.button = Gtk.Button("Regenerate")
-        self.button.connect("clicked", lambda ev: self.drawing_area.queue_draw())
+        self.button = Gtk.Button("Reset")
         self.button.show()
 
         self.vbox.pack_start(self.drawing_area, True, True, 0)
@@ -43,27 +40,49 @@ class Applet:
 
         self.window.add(self.vbox)
 
-        self.setup()
+    def run(self, draw_callback):
+        def on_draw(widget, cr):
+            draw_callback(Canvas(cr,
+                                 widget.get_allocated_width(),
+                                 widget.get_allocated_height()))
+        self.drawing_area.connect("draw", on_draw)
+        self.button.connect("clicked", lambda ev: self.drawing_area.queue_draw())
 
         self.window.present()
         Gtk.main()
 
-    def setup(self):
-        pass
+    def run_animation(self, draw_callback, msec=1000 / 30):
+        time = 0
 
-    def draw(self, canvas):
-        print("error: Applet.draw() function not implemnted")
+        def on_draw(widget, cr):
+            nonlocal time
+            draw_callback(Canvas(cr,
+                                 widget.get_allocated_width(),
+                                 widget.get_allocated_height()),
+                          time)
+        self.drawing_area.connect("draw", on_draw)
+
+        def on_reset():
+            nonlocal time
+            time = 0
+            self.window.queue_draw()
+        self.button.connect("clicked", lambda ev: on_reset())
+
+        def on_timeout():
+            nonlocal time
+            time += msec
+            self.window.queue_draw()
+            return True
+        GObject.timeout_add(msec, on_timeout)
+
+        self.window.present()
+        Gtk.main()
 
     def set_size(self, width, height):
         self.window.set_size_request(width, height)
 
     def set_title(self, title):
         self.window.set_title(title)
-
-    def __on_draw(self, widget, cr):
-        self.draw(Canvas(cr,
-                         widget.get_allocated_width(),
-                         widget.get_allocated_height()))
 
 
 # EOF #

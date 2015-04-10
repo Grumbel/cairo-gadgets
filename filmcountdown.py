@@ -19,10 +19,8 @@
 
 import cairo
 import math
-from gi.repository import Gtk, GObject
 
-
-from canvas import Canvas
+from applet import Applet
 
 
 def film_countdown(canvas, second, frame, frames):
@@ -76,7 +74,7 @@ def film_countdown(canvas, second, frame, frames):
                         cairo.FONT_WEIGHT_BOLD)
     cr.set_font_size(canvas.height * 0.8)
     center_text = "%d" % second
-    fascent, fdescent, fheight, fxadvance, fyadvance = cr.font_extents()
+    fascent, fdescent, fheight, _fxadvance, fyadvance = cr.font_extents()
     x_bearing, y_bearing, text_width, text_height, x_advance, y_advance = cr.text_extents(center_text)
     cr.move_to(canvas.width / 2 - x_advance / 2,
                canvas.height / 2 - fdescent + fheight / 2 - 12)
@@ -90,64 +88,20 @@ def film_countdown(canvas, second, frame, frames):
     cr.show_text(frameno_text)
 
 
-g_total_redraws = 0
+def on_draw(canvas, time):
+    total_frames = int(time / (1000 / 24))
 
-
-def on_draw(canvas):
-    global g_total_redraws
-
-    second = g_total_redraws / 24
-    frame = g_total_redraws % 24
+    second = total_frames / 24
+    frame = total_frames % 24
 
     film_countdown(canvas, second, frame, 24)
 
-    g_total_redraws += 1
-
-
-def on_update(widget):
-    widget.queue_draw()
-    return True
-
-
-def on_restart():
-    global g_total_redraws
-    g_total_redraws = 0
-
-
-def main():
-    window = Gtk.Window()
-    window.set_size_request(854, 480)
-    window.connect("delete-event", Gtk.main_quit)
-
-    vbox = Gtk.VBox()
-
-    widget = Gtk.DrawingArea()
-    widget.show()
-
-    widget.connect("draw", lambda widget, cr: on_draw(
-        Canvas(cr,
-               widget.get_allocated_width(),
-               widget.get_allocated_height())))
-
-    button = Gtk.Button("Restart")
-    button.connect("clicked", lambda ev: on_restart())
-    button.show()
-
-    vbox.pack_start(widget, True, True, 0)
-    vbox.pack_start(button, False, True, 0)
-    vbox.show()
-
-    window.add(vbox)
-
-    window.present()
-
-    GObject.timeout_add(1000 / 24.0, lambda: on_update(widget))
-
-    Gtk.main()
-
 
 if __name__ == "__main__":
-    main()
+    applet = Applet()
+    applet.set_size(854, 480)
+    applet.set_title("Film Countdown")
+    applet.run_animation(on_draw, 1000 / 24)
 
 
 # EOF #

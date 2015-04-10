@@ -18,56 +18,34 @@
 
 
 import math
-import time
-from gi.repository import Gtk
-from gi.repository import GObject
+
+from applet import Applet
 
 
 class ShapedGUI:
 
-    def __init__(self):
-        self.window = Gtk.Window()
+    def draw(self, canvas, time):
+        cr = canvas.cr
+        width = canvas.width
+        height = canvas.height
 
-        self.drawing_area = Gtk.DrawingArea()
-
-        self.drawing_area.set_size_request(854, 480)
-        self.window.add(self.drawing_area)
-
-        self.drawing_area.show()
-        self.window.show()  # We show here so the window gets a border on it by the WM
-
-        self.drawing_area.connect('draw', self.do_expose_event)
-
-        rect = self.window.get_allocation()
-        self.window.set_size_request(rect.width, rect.height)
-        self.window.show()
-
-        def foo():
-            self.window.queue_draw()
-            return True
-        GObject.timeout_add(20, foo)
-
-        self.count = 0
-
-    def do_expose_event(self, drawing_area, cr):
-        self.draw(cr, drawing_area.get_allocated_width(), drawing_area.get_allocated_height())
-
-    def draw(self, cr, width, height):
         # Fill the background with gray
         cr.set_source_rgb(0, 0, 0)
         cr.paint()
 
         cr.set_source_rgb(1.0, 1.0, 1.0)
 
+        time *= 0.5
+
         start = 0
-        end = math.pi * self.count / 1000.0
+        end = math.pi * time / 1000.0
 
         cx, cy = width / 2, height / 2
 
         for r in range(40, 180, 20):
             cr.save()
             cr.translate(cx, cy)
-            cr.rotate(0.02 * time.time() * r)
+            cr.rotate(0.000035 * time * r)
             # cr.rotate(0.02 + r)
             cr.translate(-cx, -cy)
 
@@ -81,19 +59,22 @@ class ShapedGUI:
         cr.select_font_face("Deja Vu")
         cr.set_font_size(32.0)
 
-        if self.count / 10 % 4 == 0:
+        count = int(time / 100.0)
+        if count % 4 == 0:
             cr.show_text("Loading")
-        elif self.count / 10 % 4 == 1:
+        elif count % 4 == 1:
             cr.show_text("Loading.")
-        elif self.count / 10 % 4 == 2:
+        elif count % 4 == 2:
             cr.show_text("Loading..")
         else:
             cr.show_text("Loading...")
 
-        self.count += 1
 
-shapedWin = ShapedGUI()
-shapedWin.window.connect("destroy", lambda w: Gtk.main_quit())
-Gtk.main()
+if __name__ == "__main__":
+    applet = Applet()
+    applet.set_size(854, 480)
+    applet.set_title("Loading Screen")
+    applet.run_animation(ShapedGUI().draw, 1000 / 60)
+
 
 # EOF #
