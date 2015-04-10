@@ -24,10 +24,10 @@ autopep:
 	autopep8 --max-line=120 --in-place --aggressive $(SOURCES)
 
 test:
-	python2 -m unittest discover -s tests/
+	python3 -m unittest discover -s tests/
 
 flake:
-	python2 -m flake8.run --max-line-length=120 $(SOURCES)
+	python3 -m flake8.run --max-line-length=120 $(SOURCES)
 
 PYLINT_TARGETS := $(addprefix .pylint/, $(SOURCES))
 
@@ -40,9 +40,6 @@ pylint: $(PYLINT_TARGETS)
 
 clean:
 	rm -vrf .pylint/
-
-run:
-	python3 -m clockgr_qt
 
 .PHONY: autopep test flake pylint clean all default run
 
