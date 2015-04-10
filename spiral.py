@@ -17,96 +17,71 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from gi.repository import Gtk
 import random
 import math
 
-from canvas import Canvas
+from applet import Applet
 
 
-def draw_spirals(canvas):
-    cr = canvas.cr
+class SpiralApplet(Applet):
 
-    # Fill the background with gray
-    cr.set_source_rgb(0.0, 0.0, 0.0)
-    cr.rectangle(0, 0, canvas.width, canvas.height)
-    cr.fill()
+    def setup(self):
+        self.set_size(640, 480)
 
-    draw_spiral(canvas,
-                canvas.width / 2.0, canvas.height / 5.0 * 4.0,
-                0,
-                canvas.width / 2.0,
-                random.random() * 0.1 + 0.1)
+    def draw(self, canvas):
+        cr = canvas.cr
 
+        # Fill the background with gray
+        cr.set_source_rgb(0.0, 0.0, 0.0)
+        cr.rectangle(0, 0, canvas.width, canvas.height)
+        cr.fill()
 
-def draw_spiral(canvas, x, y, angle, length, angle_delta):
-    cr = canvas.cr
+        self.draw_spiral(canvas,
+                         canvas.width / 2.0, canvas.height / 5.0 * 4.0,
+                         0,
+                         canvas.width / 2.0,
+                         random.random() * 0.1 + 0.1)
 
-    if length > 20.0:
-        nangle = angle + angle_delta
-        seg = length / 30.0
+    def draw_spiral(self, canvas, x, y, angle, length, angle_delta):
+        cr = canvas.cr
 
-        dx = seg * math.sin(nangle)
-        dy = -seg * math.cos(nangle)
+        if length > 20.0:
+            nangle = angle + angle_delta
+            seg = length / 30.0
 
-        # cr.set_source_rgb(random.random(),
-        #                  random.random(),
-        #                  random.random())
-        # cr.set_line_width(2.0)
-        cr.set_source_rgb(1, 1, 1)
-        cr.move_to(x,
-                   y)
-        cr.line_to(x + dx,
-                   y + dy)
-        cr.stroke()
+            dx = seg * math.sin(nangle)
+            dy = -seg * math.cos(nangle)
 
-        if random.randint(0, 15) == 0:
-            draw_spiral(canvas,
-                        x + dx,
-                        y + dy,
-                        nangle,
-                        length - seg,
-                        -angle_delta)
+            # cr.set_source_rgb(random.random(),
+            #                  random.random(),
+            #                  random.random())
+            # cr.set_line_width(2.0)
+            cr.set_source_rgb(1, 1, 1)
+            cr.move_to(x,
+                       y)
+            cr.line_to(x + dx,
+                       y + dy)
+            cr.stroke()
 
-        draw_spiral(canvas,
-                    x + dx,
-                    y + dy,
-                    nangle,
-                    length - seg,
-                    angle_delta)
+            if random.randint(0, 15) == 0:
+                self.draw_spiral(canvas,
+                                 x + dx,
+                                 y + dy,
+                                 nangle,
+                                 length - seg,
+                                 -angle_delta)
 
-
-def main():
-    window = Gtk.Window()
-    window.set_size_request(640, 480)
-    window.connect("delete-event", Gtk.main_quit)
-
-    vbox = Gtk.VBox()
-
-    widget = Gtk.DrawingArea()
-    widget.show()
-
-    widget.connect("draw",
-                   lambda widget, cr: draw_spirals(Canvas(cr,
-                                                          widget.get_allocated_width(),
-                                                          widget.get_allocated_height())))
-
-    button = Gtk.Button("Regenerate")
-    button.connect("clicked", lambda ev: widget.queue_draw())
-    button.show()
-
-    vbox.pack_start(widget, True, True, 0)
-    vbox.pack_start(button, False, True, 0)
-    vbox.show()
-
-    window.add(vbox)
-
-    window.present()
-    Gtk.main()
+            self.draw_spiral(canvas,
+                             x + dx,
+                             y + dy,
+                             nangle,
+                             length - seg,
+                             angle_delta)
 
 
 if __name__ == "__main__":
-    main()
+    applet = SpiralApplet()
+    applet.run()
 
 
 # EOF #
