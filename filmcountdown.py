@@ -124,9 +124,10 @@ def main():
     widget = Gtk.DrawingArea()
     widget.show()
 
-    widget.connect("draw", lambda widget, cr: on_draw(Canvas(cr,
-                                                             widget.get_allocated_width(),
-                                                             widget.get_allocated_height())))
+    widget.connect("draw", lambda widget, cr: on_draw(
+        Canvas(cr,
+               widget.get_allocated_width(),
+               widget.get_allocated_height())))
 
     button = Gtk.Button("Restart")
     button.connect("clicked", lambda ev: on_restart())
