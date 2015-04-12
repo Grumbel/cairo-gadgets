@@ -17,8 +17,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import cairo
-import math
 import random
 
 from applet import Applet
@@ -28,6 +26,7 @@ def midp(p1, p2):
     a = random.random() * 0.33 + 0.33
     return (a * p1[0] + (1 - a) * p2[0],
             a * p1[1] + (1 - a) * p2[1])
+
 
 class Labyrinth:
 
