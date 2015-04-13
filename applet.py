@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from gi.repository import Gtk, GObject
+from gi.repository import Gtk, Gdk, GObject
 from context import Context
 
 
@@ -42,10 +42,14 @@ class Applet:
 
     def run(self, draw_callback):
         def on_draw(widget, cr):
+            pointer = self.drawing_area.get_pointer()
             draw_callback(Context(cr,
                                   widget.get_allocated_width(),
-                                  widget.get_allocated_height()))
+                                  widget.get_allocated_height(),
+                                  pointer[0],
+                                  pointer[1]))
         self.drawing_area.connect("draw", on_draw)
+
         self.button.connect("clicked", lambda ev: self.drawing_area.queue_draw())
 
         self.window.present()
@@ -56,9 +60,14 @@ class Applet:
 
         def on_draw(widget, cr):
             nonlocal time
+
+            pointer = self.drawing_area.get_pointer()
+
             draw_callback(Context(cr,
                                   widget.get_allocated_width(),
-                                  widget.get_allocated_height()),
+                                  widget.get_allocated_height(),
+                                  pointer[0],
+                                  pointer[1]),
                           time)
         self.drawing_area.connect("draw", on_draw)
 
