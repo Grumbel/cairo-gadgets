@@ -23,7 +23,7 @@ class Applet:
 
     def __init__(self):
         self.window = Gtk.Window()
-        self.window.set_size_request(640, 480)
+        self.window.set_default_size(640, 480)
         self.window.connect("delete-event", Gtk.main_quit)
 
         self.vbox = Gtk.VBox()
@@ -97,7 +97,7 @@ class Applet:
         Gtk.main()
 
     def set_size(self, width, height):
-        self.window.set_size_request(width, height)
+        self.window.set_default_size(width, height)
 
     def set_title(self, title):
         self.window.set_title(title)
