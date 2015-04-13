@@ -50,19 +50,19 @@ def gen_segments(a, b, depth, midfunc):
 
 class Landscape:
 
-    def draw(self, canvas):
-        cr = canvas.cr
+    def draw(self, context):
+        cr = context.cr
 
         # Fill the background with gray
         cr.set_source_rgb(0.0, 0.0, 0.0)
-        cr.rectangle(0, 0, canvas.width, canvas.height)
+        cr.rectangle(0, 0, context.width, context.height)
         cr.fill()
 
         for i in range(0, 500):
             gray = random.random()
             cr.set_source_rgb(gray, gray, gray)
-            cr.arc(canvas.width * random.random() + 0.5,
-                   canvas.height * random.random() + 0.5,
+            cr.arc(context.width * random.random() + 0.5,
+                   context.height * random.random() + 0.5,
                    0.1, 0.0, 2 * math.pi)
             cr.stroke()
 
@@ -74,26 +74,26 @@ class Landscape:
         yof = (random.random() - 0.5) * 2.0
 
         for i in range(0, random.randint(1, 2)):
-            x = random.randint(0, canvas.width)
-            y = random.randint(0, canvas.height // 2)
+            x = random.randint(0, context.width)
+            y = random.randint(0, context.height // 2)
             radius = random.randint(5, 72)
 
-            self.draw_moon(canvas, x, y, radius, xof * radius, yof * radius,
+            self.draw_moon(context, x, y, radius, xof * radius, yof * radius,
                            [c[0] * (1.0 - random.random() / 10.0),
                             c[1] * (1.0 - random.random() / 10.0),
                             c[2] * (1.0 - random.random() / 10.0)])
 
-        y = canvas.height / 2.0 * 1.5
+        y = context.height / 2.0 * 1.5
         n = 64
 
         for i in range(0, n):
             cr.set_source_rgb(((i + 1) / float(n) * c[0]) ** 2.2,
                               ((i + 1) / float(n) * c[1]) ** 2.2,
                               ((i + 1) / float(n) * c[2]) ** 2.2)
-            self.draw_mountain(canvas, y + 2 ** (7.0 * (float(i) / (n - 1))))
+            self.draw_mountain(context, y + 2 ** (7.0 * (float(i) / (n - 1))))
 
-    def draw_moon(self, canvas, x, y, radius, xof, yof, c):
-        cr = canvas.cr
+    def draw_moon(self, context, x, y, radius, xof, yof, c):
+        cr = context.cr
 
         cr.set_source_rgb(c[0], c[1], c[2])
         cr.arc(x, y, radius * 1.1, 0.0, 2 * math.pi)
@@ -116,18 +116,18 @@ class Landscape:
         # cr.reset_clip()
         cr.restore()
 
-    def draw_mountain(self, canvas, y):
-        cr = canvas.cr
+    def draw_mountain(self, context, y):
+        cr = context.cr
 
         points = gen_segments(y + (random.random() - 0.5) * 128.0,
                               y + (random.random() - 0.5) * 128.0,
                               8,
-                              lambda a, b, d: (a + b) / 2.0 + (random.random() - 0.5) * (canvas.height / 3.0) / 2 ** d)
+                              lambda a, b, d: (a + b) / 2.0 + (random.random() - 0.5) * (context.height / 3.0) / 2 ** d)
 
-        cr.move_to(0, canvas.height)
+        cr.move_to(0, context.height)
         for idx, p in enumerate(points):
-            cr.line_to(canvas.width / float(len(points) - 1) * idx, p)
-        cr.line_to(canvas.width, canvas.height)
+            cr.line_to(context.width / float(len(points) - 1) * idx, p)
+        cr.line_to(context.width, context.height)
         cr.fill()
 
 

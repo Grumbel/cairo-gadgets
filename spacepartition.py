@@ -30,14 +30,14 @@ def midp(p1, p2):
 
 class SpacePartition:
 
-    def draw(self, canvas):
-        cr = canvas.cr
+    def draw(self, context):
+        cr = context.cr
 
         cr.set_line_width(0.5)
         self.draw_triangle(cr,
-                           (canvas.width/2, 0),
-                           (canvas.width, canvas.height),
-                           (0, canvas.height))
+                           (context.width/2, 0),
+                           (context.width, context.height),
+                           (0, context.height))
         cr.stroke()
 
     def draw_triangle(self, cr, p1, p2, p3, depth=0):

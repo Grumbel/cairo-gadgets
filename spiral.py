@@ -25,22 +25,22 @@ from applet import Applet
 
 class Spiral:
 
-    def draw(self, canvas):
-        cr = canvas.cr
+    def draw(self, context):
+        cr = context.cr
 
         # Fill the background with gray
         cr.set_source_rgb(0.0, 0.0, 0.0)
-        cr.rectangle(0, 0, canvas.width, canvas.height)
+        cr.rectangle(0, 0, context.width, context.height)
         cr.fill()
 
-        self.draw_spiral(canvas,
-                         canvas.width / 2.0, canvas.height / 5.0 * 4.0,
+        self.draw_spiral(context,
+                         context.width / 2.0, context.height / 5.0 * 4.0,
                          0,
-                         canvas.width / 2.0,
+                         context.width / 2.0,
                          random.random() * 0.1 + 0.1)
 
-    def draw_spiral(self, canvas, x, y, angle, length, angle_delta):
-        cr = canvas.cr
+    def draw_spiral(self, context, x, y, angle, length, angle_delta):
+        cr = context.cr
 
         if length > 20.0:
             nangle = angle + angle_delta
@@ -61,14 +61,14 @@ class Spiral:
             cr.stroke()
 
             if random.randint(0, 15) == 0:
-                self.draw_spiral(canvas,
+                self.draw_spiral(context,
                                  x + dx,
                                  y + dy,
                                  nangle,
                                  length - seg,
                                  -angle_delta)
 
-            self.draw_spiral(canvas,
+            self.draw_spiral(context,
                              x + dx,
                              y + dy,
                              nangle,

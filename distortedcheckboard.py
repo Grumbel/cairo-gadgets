@@ -20,12 +20,12 @@
 from applet import Applet
 
 
-def draw(canvas):
-    cr = canvas.cr
+def draw(context):
+    cr = context.cr
 
     n = 16
-    cw = canvas.width / n
-    ch = canvas.height / n
+    cw = context.width / n
+    ch = context.height / n
 
     for y in range(0, n):
         for x in range(0, n):

@@ -30,12 +30,12 @@ def midp(p1, p2):
 
 class Labyrinth:
 
-    def draw(self, canvas):
-        cr = canvas.cr
+    def draw(self, context):
+        cr = context.cr
 
         self.draw_room(cr,
                        0, 0,
-                       canvas.width, canvas.height)
+                       context.width, context.height)
         cr.stroke()
 
     def draw_room(self, cr, x, y, w, h, depth=0):

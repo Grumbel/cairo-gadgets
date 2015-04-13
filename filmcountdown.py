@@ -23,8 +23,8 @@ import math
 from applet import Applet
 
 
-def film_countdown(canvas, second, frame, frames):
-    cr = canvas.cr
+def film_countdown(context, second, frame, frames):
+    cr = context.cr
 
     # background fill
     cr.set_source_rgb(0.5, 0.5, 0.5)
@@ -32,9 +32,9 @@ def film_countdown(canvas, second, frame, frames):
 
     # progress
     progress = (frame + 1) / frames
-    radius = canvas.width
-    cr.move_to(canvas.width / 2, canvas.height / 2)
-    cr.arc(canvas.width / 2, canvas.height / 2, radius,
+    radius = context.width
+    cr.move_to(context.width / 2, context.height / 2)
+    cr.arc(context.width / 2, context.height / 2, radius,
            0 - math.pi / 2, 2 * math.pi * progress - math.pi / 2)
     cr.close_path()
 
@@ -45,21 +45,21 @@ def film_countdown(canvas, second, frame, frames):
     cr.stroke()
 
     # background cross
-    cr.move_to(canvas.width / 2, 0)
-    cr.line_to(canvas.width / 2, canvas.height)
-    cr.move_to(0, canvas.height / 2)
-    cr.line_to(canvas.width, canvas.height / 2)
+    cr.move_to(context.width / 2, 0)
+    cr.line_to(context.width / 2, context.height)
+    cr.move_to(0, context.height / 2)
+    cr.line_to(context.width, context.height / 2)
 
     cr.set_source_rgb(0.25, 0.25, 0.25)
     cr.set_line_width(6.0)
     cr.stroke()
 
     # two white circles
-    radius = canvas.height / 2 * 0.9
-    cr.arc(canvas.width / 2, canvas.height / 2, radius,
+    radius = context.height / 2 * 0.9
+    cr.arc(context.width / 2, context.height / 2, radius,
            0, 2 * math.pi)
     cr.new_sub_path()
-    cr.arc(canvas.width / 2, canvas.height / 2, radius * 0.8,
+    cr.arc(context.width / 2, context.height / 2, radius * 0.8,
            0, 2 * math.pi)
 
     cr.set_source_rgb(1, 1, 1)
@@ -72,29 +72,29 @@ def film_countdown(canvas, second, frame, frames):
     cr.select_font_face("Ubuntu",
                         cairo.FONT_SLANT_NORMAL,
                         cairo.FONT_WEIGHT_BOLD)
-    cr.set_font_size(canvas.height * 0.8)
+    cr.set_font_size(context.height * 0.8)
     center_text = "%d" % second
     fascent, fdescent, fheight, _fxadvance, fyadvance = cr.font_extents()
     x_bearing, y_bearing, text_width, text_height, x_advance, y_advance = cr.text_extents(center_text)
-    cr.move_to(canvas.width / 2 - x_advance / 2,
-               canvas.height / 2 - fdescent + fheight / 2 - 12)
+    cr.move_to(context.width / 2 - x_advance / 2,
+               context.height / 2 - fdescent + fheight / 2 - 12)
     cr.show_text(center_text)
 
-    cr.set_font_size(canvas.height * 0.1)
+    cr.set_font_size(context.height * 0.1)
     frameno_text = "%02d/%02d" % (frame + 1, frames)
     x_bearing, y_bearing, text_width, text_height, x_advance, y_advance = cr.text_extents(frameno_text)
-    cr.move_to(canvas.width - x_advance - 8,
-               canvas.height - 8)
+    cr.move_to(context.width - x_advance - 8,
+               context.height - 8)
     cr.show_text(frameno_text)
 
 
-def on_draw(canvas, time):
+def on_draw(context, time):
     total_frames = int(time / (1000 / 24))
 
     second = total_frames / 24
     frame = total_frames % 24
 
-    film_countdown(canvas, second, frame, 24)
+    film_countdown(context, second, frame, 24)
 
 
 if __name__ == "__main__":

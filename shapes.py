@@ -24,10 +24,10 @@ from applet import Applet
 
 class ShapedGUI:
 
-    def draw(self, canvas, time):
-        cr = canvas.cr
-        width = canvas.width
-        height = canvas.height
+    def draw(self, context, time):
+        cr = context.cr
+        width = context.width
+        height = context.height
 
         # Fill the background with gray
         cr.set_source_rgb(0, 0, 0)

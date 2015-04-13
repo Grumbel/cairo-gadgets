@@ -23,15 +23,15 @@ import cairo
 from applet import Applet
 
 
-def draw(canvas):
-    cr = canvas.cr
+def draw(context):
+    cr = context.cr
 
     text = "Wegzy!ö"
 
     cr.select_font_face("Ubuntu",
                         cairo.FONT_SLANT_NORMAL,
                         cairo.FONT_WEIGHT_BOLD)
-    cr.set_font_size(canvas.height * 0.2)
+    cr.set_font_size(context.height * 0.2)
 
     fascent, fdescent, fheight, fxadvance, fyadvance = cr.font_extents()
     x_bearing, y_bearing, text_width, text_height, x_advance, y_advance = cr.text_extents(text)
@@ -52,11 +52,11 @@ def draw(canvas):
 
     # Fill the background with gray
     cr.set_source_rgb(1, 1, 1)
-    cr.rectangle(0, 0, canvas.width, canvas.height)
+    cr.rectangle(0, 0, context.width, context.height)
     cr.fill()
 
-    x = canvas.width / 2 - text_width / 2
-    y = canvas.height / 2
+    x = context.width / 2 - text_width / 2
+    y = context.height / 2
 
     cr.set_source_rgb(0, 0, 0)
     cr.move_to(x, y)

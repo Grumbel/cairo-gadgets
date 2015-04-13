@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class Canvas:
+class Context:
 
     def __init__(self, cr, width, height):
         self.cr = cr

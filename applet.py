@@ -16,7 +16,7 @@
 
 
 from gi.repository import Gtk, GObject
-from canvas import Canvas
+from context import Context
 
 
 class Applet:
@@ -42,9 +42,9 @@ class Applet:
 
     def run(self, draw_callback):
         def on_draw(widget, cr):
-            draw_callback(Canvas(cr,
-                                 widget.get_allocated_width(),
-                                 widget.get_allocated_height()))
+            draw_callback(Context(cr,
+                                  widget.get_allocated_width(),
+                                  widget.get_allocated_height()))
         self.drawing_area.connect("draw", on_draw)
         self.button.connect("clicked", lambda ev: self.drawing_area.queue_draw())
 
@@ -56,9 +56,9 @@ class Applet:
 
         def on_draw(widget, cr):
             nonlocal time
-            draw_callback(Canvas(cr,
-                                 widget.get_allocated_width(),
-                                 widget.get_allocated_height()),
+            draw_callback(Context(cr,
+                                  widget.get_allocated_width(),
+                                  widget.get_allocated_height()),
                           time)
         self.drawing_area.connect("draw", on_draw)
 

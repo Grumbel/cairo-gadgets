@@ -24,10 +24,10 @@ from applet import Applet
 
 class Tunnel:
 
-    def draw(self, canvas, time):
-        cr = canvas.cr
-        cx = canvas.width / 2
-        cy = canvas.height / 2
+    def draw(self, context, time):
+        cr = context.cr
+        cx = context.width / 2
+        cy = context.height / 2
 
         for i in range(0, 40):
             i += time * 0.05
