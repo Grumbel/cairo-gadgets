@@ -38,16 +38,19 @@ class Applet:
         self.vbox.pack_start(self.button, False, True, 0)
         self.vbox.show()
 
-        def on_key_press(window, event):
-            if event.keyval == Gdk.KEY_F11 or event.keyval == Gdk.KEY_f:
-                fullscreen = Gdk.WindowState.FULLSCREEN & window.get_window().get_state()
-                if fullscreen:
-                    window.unfullscreen()
-                else:
-                    window.fullscreen()
-        self.window.connect("key-press-event", on_key_press)
+        self.window.connect("key-press-event", self.on_key_press)
 
         self.window.add(self.vbox)
+
+    def on_key_press(self, window, event):
+        if event.keyval == Gdk.KEY_F11 or event.keyval == Gdk.KEY_f:
+            fullscreen = Gdk.WindowState.FULLSCREEN & window.get_window().get_state()
+            if fullscreen:
+                window.unfullscreen()
+            else:
+                window.fullscreen()
+        elif event.keyval == Gdk.KEY_Escape or event.keyval == Gdk.KEY_q:
+            Gtk.main_quit()
 
     def run(self, draw_callback):
         def on_draw(widget, cr):
