@@ -38,8 +38,6 @@ class MouseBubbles:
 
     def draw(self, ctx, time):
         cr = ctx.cr
-        width = ctx.width
-        height = ctx.height
 
         # fill background
         cr.set_source_rgb(0, 0, 0)
