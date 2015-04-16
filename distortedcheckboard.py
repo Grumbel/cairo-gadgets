@@ -17,18 +17,28 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import random
+import math
+
 from applet import Applet
 
 
-def draw(context):
-    cr = context.cr
+def draw(ctx):
+    cr = ctx.cr
 
-    n = 16
-    cw = context.width / n
-    ch = context.height / n
+    # square size
+    cw = 32
+    ch = 32
 
-    for y in range(0, n):
-        for x in range(0, n):
+    # small square size
+    scw = cw / 6
+    sch = ch / 6
+
+    xn = int(math.ceil(ctx.width / cw))
+    yn = int(math.ceil(ctx.height / ch))
+
+    for y in range(0, yn):
+        for x in range(0, xn):
             cr.rectangle(x * cw, y * ch, cw, ch)
 
             if (x + y) % 2 == 0:
@@ -37,18 +47,15 @@ def draw(context):
                 cr.set_source_rgb(0, 0.5, 0)
             cr.fill()
 
-    scw = cw / 6
-    sch = ch / 6
-
-    for y in range(0, n):
-        for x in range(0, n):
+    for y in range(0, yn):
+        for x in range(0, xn):
             p1x = x * cw + scw * 0.25
             p1y = y * ch + sch * 0.25
 
             p2x = x * cw + cw - scw * 1.25
             p2y = y * ch + ch - sch * 1.25
 
-            if x % 2 == 0:
+            if random.randint(0, 1):
                 cr.rectangle(p1x, p1y, scw, sch)
                 cr.rectangle(p2x, p2y, scw, sch)
                 # cr.rectangle(p1x, p2y, scw, sch)
