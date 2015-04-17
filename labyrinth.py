@@ -33,22 +33,22 @@ class Labyrinth:
 
         i = ctx.random.randint(0, 3)
         if i == 0:
-            cr.move_to(x, y + h/2)
+            cr.move_to(x, y + h / 2)
         elif i == 1:
-            cr.move_to(x + w, y + h/2)
+            cr.move_to(x + w, y + h / 2)
         elif i == 2:
-            cr.move_to(x + w/2, y)
+            cr.move_to(x + w / 2, y)
         elif i == 3:
-            cr.move_to(x + w/2, y + h)
+            cr.move_to(x + w / 2, y + h)
 
-        cr.line_to(x + w/2, y + h/2)
+        cr.line_to(x + w / 2, y + h / 2)
         cr.close_path()
 
         if depth < 5:
-            self.draw_room(ctx, x, y, w/2, h/2, depth+1)
-            self.draw_room(ctx, x + w/2, y, w/2, h/2, depth+1)
-            self.draw_room(ctx, x, y + h/2, w/2, h/2, depth+1)
-            self.draw_room(ctx, x + w/2, y + h/2, w/2, h/2, depth+1)
+            self.draw_room(ctx, x, y, w / 2, h / 2, depth + 1)
+            self.draw_room(ctx, x + w / 2, y, w / 2, h / 2, depth + 1)
+            self.draw_room(ctx, x, y + h / 2, w / 2, h / 2, depth + 1)
+            self.draw_room(ctx, x + w / 2, y + h / 2, w / 2, h / 2, depth + 1)
 
 
 if __name__ == "__main__":

@@ -32,7 +32,7 @@ class Tunnel:
         for i in range(0, 40):
             i += ctx.time * 0.05
             i = i % 40
-            r = 40 * (i/10)**2
+            r = 40 * (i / 10) ** 2
             cr.arc(cx, cy, r, 0, 2 * math.pi)
             cr.stroke()
 

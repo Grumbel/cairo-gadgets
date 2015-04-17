@@ -37,46 +37,46 @@ def draw(ctx):
     cr.set_source_rgb(0.6, 0.6, 0.6)
     for y in range(0, 8):
         for x in range(0 + y % 2, 8, 2):
-            cr.rectangle(x * width/8, y * height/8, width/8, height/8)
+            cr.rectangle(x * width / 8, y * height / 8, width / 8, height / 8)
             cr.fill()
 
     cr.set_source_rgba(1.0, 0.0, 0.0, 0.5)
-    cr.arc(width/2, height/2, height * 0.4, 0, 2*math.pi)
+    cr.arc(width / 2, height / 2, height * 0.4, 0, 2 * math.pi)
     cr.fill()
 
     cr.set_source_rgb(1.0, 1.0, 0.0)
-    cr.arc(width/2, height/2, height * 0.3, 0, 2*math.pi)
+    cr.arc(width / 2, height / 2, height * 0.3, 0, 2 * math.pi)
     cr.fill()
 
     cr.set_source_rgb(0.0, 1.0, 1.0)
-    cr.arc(width/2, height/2, height * 0.15, 0, 2*math.pi)
+    cr.arc(width / 2, height / 2, height * 0.15, 0, 2 * math.pi)
     cr.fill()
 
     # outer circle
     cr.set_source_rgb(0.0, 0.0, 0.0)
-    cr.arc(0, 0, 24, 0, 2*math.pi)
+    cr.arc(0, 0, 24, 0, 2 * math.pi)
     cr.stroke()
 
-    cr.arc(width, 0, 24, 0, 2*math.pi)
+    cr.arc(width, 0, 24, 0, 2 * math.pi)
     cr.stroke()
 
-    cr.arc(width, height, 24, 0, 2*math.pi)
+    cr.arc(width, height, 24, 0, 2 * math.pi)
     cr.stroke()
 
-    cr.arc(0, height, 24, 0, 2*math.pi)
+    cr.arc(0, height, 24, 0, 2 * math.pi)
     cr.stroke()
 
     # inner circle
-    cr.arc(0, 0, 12, 0, 2*math.pi)
+    cr.arc(0, 0, 12, 0, 2 * math.pi)
     cr.fill()
 
-    cr.arc(width, 0, 12, 0, 2*math.pi)
+    cr.arc(width, 0, 12, 0, 2 * math.pi)
     cr.fill()
 
-    cr.arc(width, height, 12, 0, 2*math.pi)
+    cr.arc(width, height, 12, 0, 2 * math.pi)
     cr.fill()
 
-    cr.arc(0, height, 12, 0, 2*math.pi)
+    cr.arc(0, height, 12, 0, 2 * math.pi)
     cr.fill()
 
     cr.set_source_rgb(0.0, 0.0, 0.0)

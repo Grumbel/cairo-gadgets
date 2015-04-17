@@ -33,7 +33,7 @@ class SpacePartition:
 
         cr.set_line_width(0.5)
         self.draw_triangle(ctx, cr,
-                           (ctx.width/2, 0),
+                           (ctx.width / 2, 0),
                            (ctx.width, ctx.height),
                            (0, ctx.height))
         cr.stroke()

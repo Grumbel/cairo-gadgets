@@ -45,7 +45,7 @@ def draw_eye(ctx, x, y):
     eby = (ctx.mouse_y - y) / sy
 
     ebr = r * 0.6
-    d = math.sqrt(ebx**2 + eby**2)
+    d = math.sqrt(ebx ** 2 + eby ** 2)
     if d > ebr:
         ebx = ebx / d * ebr
         eby = eby / d * ebr
@@ -58,8 +58,8 @@ def draw_eye(ctx, x, y):
 
 
 def draw(ctx):
-    draw_eye(ctx, ctx.width/2 - ctx.width/4, ctx.height/2)
-    draw_eye(ctx, ctx.width/2 + ctx.width/4, ctx.height/2)
+    draw_eye(ctx, ctx.width / 2 - ctx.width / 4, ctx.height / 2)
+    draw_eye(ctx, ctx.width / 2 + ctx.width / 4, ctx.height / 2)
 
 
 if __name__ == "__main__":
