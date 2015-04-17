@@ -17,7 +17,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import random
 import math
 
 from applet import Applet
@@ -30,11 +29,6 @@ def midpoint(lst):
         x += el[0]
         y += el[1]
     return (x / len(lst), y / len(lst))
-
-
-def jitter(p, r):
-    return (p[0] + (random.random() * 2.0 - 1.0) * r,
-            p[1] + (random.random() * 2.0 - 1.0) * r)
 
 
 def gen_segments(a, b, depth, midfunc):
@@ -50,50 +44,50 @@ def gen_segments(a, b, depth, midfunc):
 
 class Landscape:
 
-    def draw(self, context):
-        cr = context.cr
+    def draw(self, ctx):
+        cr = ctx.cr
 
         # Fill the background with gray
         cr.set_source_rgb(0.0, 0.0, 0.0)
-        cr.rectangle(0, 0, context.width, context.height)
+        cr.rectangle(0, 0, ctx.width, ctx.height)
         cr.fill()
 
         for i in range(0, 500):
-            gray = random.random()
+            gray = ctx.random.random()
             cr.set_source_rgb(gray, gray, gray)
-            cr.arc(context.width * random.random() + 0.5,
-                   context.height * random.random() + 0.5,
+            cr.arc(ctx.width * ctx.random.random() + 0.5,
+                   ctx.height * ctx.random.random() + 0.5,
                    0.1, 0.0, 2 * math.pi)
             cr.stroke()
 
-        c = [random.random(),
-             random.random(),
-             random.random()]
+        c = [ctx.random.random(),
+             ctx.random.random(),
+             ctx.random.random()]
 
-        xof = (random.random() - 0.5) * 2.0
-        yof = (random.random() - 0.5) * 2.0
+        xof = (ctx.random.random() - 0.5) * 2.0
+        yof = (ctx.random.random() - 0.5) * 2.0
 
-        for i in range(0, random.randint(1, 2)):
-            x = random.randint(0, context.width)
-            y = random.randint(0, context.height // 2)
-            radius = random.randint(5, 72)
+        for i in range(0, ctx.random.randint(1, 2)):
+            x = ctx.random.randint(0, ctx.width)
+            y = ctx.random.randint(0, ctx.height // 2)
+            radius = ctx.random.randint(5, 72)
 
-            self.draw_moon(context, x, y, radius, xof * radius, yof * radius,
-                           [c[0] * (1.0 - random.random() / 10.0),
-                            c[1] * (1.0 - random.random() / 10.0),
-                            c[2] * (1.0 - random.random() / 10.0)])
+            self.draw_moon(ctx, x, y, radius, xof * radius, yof * radius,
+                           [c[0] * (1.0 - ctx.random.random() / 10.0),
+                            c[1] * (1.0 - ctx.random.random() / 10.0),
+                            c[2] * (1.0 - ctx.random.random() / 10.0)])
 
-        y = context.height / 2.0 * 1.5
+        y = ctx.height / 2.0 * 1.5
         n = 64
 
         for i in range(0, n):
             cr.set_source_rgb(((i + 1) / float(n) * c[0]) ** 2.2,
                               ((i + 1) / float(n) * c[1]) ** 2.2,
                               ((i + 1) / float(n) * c[2]) ** 2.2)
-            self.draw_mountain(context, y + 2 ** (7.0 * (float(i) / (n - 1))))
+            self.draw_mountain(ctx, y + 2 ** (7.0 * (float(i) / (n - 1))))
 
-    def draw_moon(self, context, x, y, radius, xof, yof, c):
-        cr = context.cr
+    def draw_moon(self, ctx, x, y, radius, xof, yof, c):
+        cr = ctx.cr
 
         cr.set_source_rgb(c[0], c[1], c[2])
         cr.arc(x, y, radius * 1.1, 0.0, 2 * math.pi)
@@ -116,18 +110,18 @@ class Landscape:
         # cr.reset_clip()
         cr.restore()
 
-    def draw_mountain(self, context, y):
-        cr = context.cr
+    def draw_mountain(self, ctx, y):
+        cr = ctx.cr
 
-        points = gen_segments(y + (random.random() - 0.5) * 128.0,
-                              y + (random.random() - 0.5) * 128.0,
+        points = gen_segments(y + (ctx.random.random() - 0.5) * 128.0,
+                              y + (ctx.random.random() - 0.5) * 128.0,
                               8,
-                              lambda a, b, d: (a + b) / 2.0 + (random.random() - 0.5) * (context.height / 3.0) / 2 ** d)
+                              lambda a, b, d: (a + b) / 2.0 + (ctx.random.random() - 0.5) * (ctx.height / 3.0) / 2 ** d)
 
-        cr.move_to(0, context.height)
+        cr.move_to(0, ctx.height)
         for idx, p in enumerate(points):
-            cr.line_to(context.width / float(len(points) - 1) * idx, p)
-        cr.line_to(context.width, context.height)
+            cr.line_to(ctx.width / float(len(points) - 1) * idx, p)
+        cr.line_to(ctx.width, ctx.height)
         cr.fill()
 
 

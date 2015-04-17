@@ -17,29 +17,21 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import random
-
 from applet import Applet
-
-
-def midp(p1, p2):
-    a = random.random() * 0.33 + 0.33
-    return (a * p1[0] + (1 - a) * p2[0],
-            a * p1[1] + (1 - a) * p2[1])
 
 
 class Labyrinth:
 
-    def draw(self, context):
-        cr = context.cr
+    def draw(self, ctx):
+        cr = ctx.cr
 
-        self.draw_room(cr,
+        self.draw_room(ctx, cr,
                        0, 0,
-                       context.width, context.height)
+                       ctx.width, ctx.height)
         cr.stroke()
 
-    def draw_room(self, cr, x, y, w, h, depth=0):
-        i = random.randint(0, 3)
+    def draw_room(self, ctx, cr, x, y, w, h, depth=0):
+        i = ctx.random.randint(0, 3)
         if i == 0:
             cr.move_to(x, y + h/2)
         elif i == 1:

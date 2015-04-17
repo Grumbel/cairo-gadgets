@@ -15,6 +15,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import random
+
 from gi.repository import Gtk, Gdk, GObject
 from context import Context
 
@@ -42,6 +44,8 @@ class Applet:
 
         self.window.add(self.vbox)
 
+        self.random = random.Random()
+
     def on_key_press(self, window, event):
         if event.keyval == Gdk.KEY_F11 or event.keyval == Gdk.KEY_f:
             fullscreen = Gdk.WindowState.FULLSCREEN & window.get_window().get_state()
@@ -59,7 +63,9 @@ class Applet:
                                   widget.get_allocated_width(),
                                   widget.get_allocated_height(),
                                   pointer[0],
-                                  pointer[1]))
+                                  pointer[1],
+                                  0,
+                                  self.random))
         self.drawing_area.connect("draw", on_draw)
 
         self.button.connect("clicked", lambda ev: self.drawing_area.queue_draw())
@@ -79,8 +85,9 @@ class Applet:
                                   widget.get_allocated_width(),
                                   widget.get_allocated_height(),
                                   pointer[0],
-                                  pointer[1]),
-                          time)
+                                  pointer[1],
+                                  time,
+                                  self.random))
         self.drawing_area.connect("draw", on_draw)
 
         def on_reset():

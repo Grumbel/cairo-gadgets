@@ -88,13 +88,13 @@ def film_countdown(context, second, frame, frames):
     cr.show_text(frameno_text)
 
 
-def on_draw(context, time):
-    total_frames = int(time / (1000 / 24))
+def on_draw(ctx):
+    total_frames = int(ctx.time / (1000 / 24))
 
     second = total_frames / 24
     frame = total_frames % 24
 
-    film_countdown(context, second, frame, 24)
+    film_countdown(ctx, second, frame, 24)
 
 
 if __name__ == "__main__":

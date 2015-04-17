@@ -17,7 +17,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import random
 import math
 
 from applet import Applet
@@ -25,22 +24,22 @@ from applet import Applet
 
 class Spiral:
 
-    def draw(self, context):
-        cr = context.cr
+    def draw(self, ctx):
+        cr = ctx.cr
 
         # Fill the background with gray
         cr.set_source_rgb(0.0, 0.0, 0.0)
-        cr.rectangle(0, 0, context.width, context.height)
+        cr.rectangle(0, 0, ctx.width, ctx.height)
         cr.fill()
 
-        self.draw_spiral(context,
-                         context.width / 2.0, context.height / 5.0 * 4.0,
+        self.draw_spiral(ctx,
+                         ctx.width / 2.0, ctx.height / 5.0 * 4.0,
                          0,
-                         context.width / 2.0,
-                         random.random() * 0.1 + 0.1)
+                         ctx.width / 2.0,
+                         ctx.random.random() * 0.1 + 0.1)
 
-    def draw_spiral(self, context, x, y, angle, length, angle_delta):
-        cr = context.cr
+    def draw_spiral(self, ctx, x, y, angle, length, angle_delta):
+        cr = ctx.cr
 
         if length > 20.0:
             nangle = angle + angle_delta
@@ -49,9 +48,9 @@ class Spiral:
             dx = seg * math.sin(nangle)
             dy = -seg * math.cos(nangle)
 
-            # cr.set_source_rgb(random.random(),
-            #                  random.random(),
-            #                  random.random())
+            # cr.set_source_rgb(ctx.random.random(),
+            #                  ctx.random.random(),
+            #                  ctx.random.random())
             # cr.set_line_width(2.0)
             cr.set_source_rgb(1, 1, 1)
             cr.move_to(x,
@@ -60,15 +59,15 @@ class Spiral:
                        y + dy)
             cr.stroke()
 
-            if random.randint(0, 15) == 0:
-                self.draw_spiral(context,
+            if ctx.random.randint(0, 15) == 0:
+                self.draw_spiral(ctx,
                                  x + dx,
                                  y + dy,
                                  nangle,
                                  length - seg,
                                  -angle_delta)
 
-            self.draw_spiral(context,
+            self.draw_spiral(ctx,
                              x + dx,
                              y + dy,
                              nangle,

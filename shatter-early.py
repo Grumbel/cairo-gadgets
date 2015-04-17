@@ -41,9 +41,9 @@ class Screen(Gtk.DrawingArea):
     # Handle the expose-event by drawing
 
     def do_draw(self, cr):
-        self.draw(cr, self.get_allocated_width(), self.get_allocated_height())
+        width = self.get_allocated_width()
+        height = self.get_allocated_height()
 
-    def draw(self, cr, width, height):
         # Fill the background with gray
         cr.set_source_rgb(0.0, 0.0, 0.0)
         cr.rectangle(0, 0, width, height)

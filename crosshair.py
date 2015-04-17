@@ -25,7 +25,7 @@ class Crosshair:
     def __init__(self):
         pass
 
-    def draw(self, ctx, time):
+    def draw(self, ctx):
         cr = ctx.cr
 
         # fill background

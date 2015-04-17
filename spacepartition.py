@@ -17,44 +17,42 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import random
-
 from applet import Applet
 
 
-def midp(p1, p2):
-    a = random.random() * 0.33 + 0.33
+def midp(ctx, p1, p2):
+    a = ctx.random.random() * 0.33 + 0.33
     return (a * p1[0] + (1 - a) * p2[0],
             a * p1[1] + (1 - a) * p2[1])
 
 
 class SpacePartition:
 
-    def draw(self, context):
-        cr = context.cr
+    def draw(self, ctx):
+        cr = ctx.cr
 
         cr.set_line_width(0.5)
-        self.draw_triangle(cr,
-                           (context.width/2, 0),
-                           (context.width, context.height),
-                           (0, context.height))
+        self.draw_triangle(ctx, cr,
+                           (ctx.width/2, 0),
+                           (ctx.width, ctx.height),
+                           (0, ctx.height))
         cr.stroke()
 
-    def draw_triangle(self, cr, p1, p2, p3, depth=0):
+    def draw_triangle(self, ctx, cr, p1, p2, p3, depth=0):
         cr.move_to(p1[0], p1[1])
         cr.line_to(p2[0], p2[1])
         cr.line_to(p3[0], p3[1])
         cr.close_path()
 
         if depth < 6:
-            np1 = midp(p1, p2)
-            np2 = midp(p2, p3)
-            np3 = midp(p3, p1)
+            np1 = midp(ctx, p1, p2)
+            np2 = midp(ctx, p2, p3)
+            np3 = midp(ctx, p3, p1)
 
-            self.draw_triangle(cr, p1, np1, np3, depth + 1)
-            self.draw_triangle(cr, np1, p2, np2, depth + 1)
-            self.draw_triangle(cr, np3, np2, p3, depth + 1)
-            self.draw_triangle(cr, np1, np2, np3, depth + 1)
+            self.draw_triangle(ctx, cr, p1, np1, np3, depth + 1)
+            self.draw_triangle(ctx, cr, np1, p2, np2, depth + 1)
+            self.draw_triangle(ctx, cr, np3, np2, p3, depth + 1)
+            self.draw_triangle(ctx, cr, np1, np2, np3, depth + 1)
 
 
 if __name__ == "__main__":

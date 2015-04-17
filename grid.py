@@ -17,23 +17,21 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import random
-
 from applet import Applet
 
 
 class GridGadget:
 
-    def draw(self, context):
-        cr = context.cr
+    def draw(self, ctx):
+        cr = ctx.cr
 
         cr.set_source_rgb(0.0, 0.0, 0.0)
-        cr.rectangle(0, 0, context.width, context.height)
+        cr.rectangle(0, 0, ctx.width, ctx.height)
         cr.fill()
 
-        n = random.randint(6, 64)
-        x_step = context.width / (n - 1)
-        y_step = context.height / (n - 1)
+        n = ctx.random.randint(6, 64)
+        x_step = ctx.width / (n - 1)
+        y_step = ctx.height / (n - 1)
 
         cr.set_source_rgb(1.0, 0.0, 0.0)
         for i in range(n):
@@ -44,18 +42,18 @@ class GridGadget:
         cr.set_source_rgb(0.0, 0.0, 1.0)
         for i in range(n):
             cr.move_to(0, i * y_step)
-            cr.line_to(i * x_step, context.height)
+            cr.line_to(i * x_step, ctx.height)
         cr.stroke()
 
         cr.set_source_rgb(0.0, 1.0, 1.0)
         for i in range(n):
-            cr.move_to(context.width, (n - i - 1) * y_step)
-            cr.line_to(i * x_step, context.height)
+            cr.move_to(ctx.width, (n - i - 1) * y_step)
+            cr.line_to(i * x_step, ctx.height)
         cr.stroke()
 
         cr.set_source_rgb(1.0, 0.0, 1.0)
         for i in range(n):
-            cr.move_to(context.width, (n - i - 1) * y_step)
+            cr.move_to(ctx.width, (n - i - 1) * y_step)
             cr.line_to((n - i - 1) * x_step, 0)
         cr.stroke()
 

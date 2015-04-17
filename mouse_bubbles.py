@@ -36,7 +36,7 @@ class MouseBubbles:
         self.bubbles = []
         self.flip = 0
 
-    def draw(self, ctx, time):
+    def draw(self, ctx):
         cr = ctx.cr
 
         # fill background

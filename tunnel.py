@@ -24,13 +24,13 @@ from applet import Applet
 
 class Tunnel:
 
-    def draw(self, context, time):
-        cr = context.cr
-        cx = context.width / 2
-        cy = context.height / 2
+    def draw(self, ctx):
+        cr = ctx.cr
+        cx = ctx.width / 2
+        cy = ctx.height / 2
 
         for i in range(0, 40):
-            i += time * 0.05
+            i += ctx.time * 0.05
             i = i % 40
             r = 40 * (i/10)**2
             cr.arc(cx, cy, r, 0, 2 * math.pi)

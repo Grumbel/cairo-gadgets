@@ -17,7 +17,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import random
 import math
 
 from applet import Applet
@@ -55,7 +54,7 @@ def draw(ctx):
             p2x = x * cw + cw - scw * 1.25
             p2y = y * ch + ch - sch * 1.25
 
-            if random.randint(0, 1):
+            if ctx.random.randint(0, 1):
                 cr.rectangle(p1x, p1y, scw, sch)
                 cr.rectangle(p2x, p2y, scw, sch)
                 # cr.rectangle(p1x, p2y, scw, sch)
