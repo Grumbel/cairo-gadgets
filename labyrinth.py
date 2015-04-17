@@ -23,14 +23,14 @@ from applet import Applet
 class Labyrinth:
 
     def draw(self, ctx):
-        cr = ctx.cr
-
-        self.draw_room(ctx, cr,
+        self.draw_room(ctx,
                        0, 0,
                        ctx.width, ctx.height)
-        cr.stroke()
+        ctx.cr.stroke()
 
-    def draw_room(self, ctx, cr, x, y, w, h, depth=0):
+    def draw_room(self, ctx, x, y, w, h, depth=0):
+        cr = ctx.cr
+
         i = ctx.random.randint(0, 3)
         if i == 0:
             cr.move_to(x, y + h/2)
@@ -45,10 +45,11 @@ class Labyrinth:
         cr.close_path()
 
         if depth < 5:
-            self.draw_room(cr, x, y, w/2, h/2, depth+1)
-            self.draw_room(cr, x + w/2, y, w/2, h/2, depth+1)
-            self.draw_room(cr, x, y + h/2, w/2, h/2, depth+1)
-            self.draw_room(cr, x + w/2, y + h/2, w/2, h/2, depth+1)
+            self.draw_room(ctx, x, y, w/2, h/2, depth+1)
+            self.draw_room(ctx, x + w/2, y, w/2, h/2, depth+1)
+            self.draw_room(ctx, x, y + h/2, w/2, h/2, depth+1)
+            self.draw_room(ctx, x + w/2, y + h/2, w/2, h/2, depth+1)
+
 
 if __name__ == "__main__":
     applet = Applet()
