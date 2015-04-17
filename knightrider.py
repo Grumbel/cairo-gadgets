@@ -21,7 +21,7 @@ from applet import Applet
 
 
 def draw(ctx):
-    total_frames = int(ctx.time / (1000 / 12))
+    total_frames = int(ctx.time / (1000 / 16))
 
     cr = ctx.cr
 
@@ -37,16 +37,42 @@ def draw(ctx):
 
     cr.set_source_rgb(0, 0, 0)
     cr.paint()
+    lit2 = ((total_frames - 2) % (2*n - 2)) - (n - 1)
+    lit1 = ((total_frames - 1) % (2*n - 2)) - (n - 1)
     lit = (total_frames % (2*n - 2)) - (n - 1)
     for i in range(n):
         if lit == i or lit == -i:
             cr.set_source_rgb(0.75, 0, 0)
+            cr.rectangle(cx - cw / 2 - w/2 + i * (cw + cw / 2) - cw/4,
+                         cy - ch / 2 - cw/4,
+                         cw + cw/2, ch + cw/2)
+            cr.fill()
+
+            cr.set_source_rgb(1, 0, 0)
+            cr.rectangle(cx - cw / 2 - w/2 + i * (cw + cw / 2) - cw/8,
+                         cy - ch / 2 - cw/8,
+                         cw + cw/4, ch + cw/4)
+            cr.fill()
+        elif lit1 == i or lit1 == -i:
+            cr.set_source_rgb(0.5, 0, 0)
             cr.rectangle(cx - cw / 2 - w/2 + i * (cw + cw / 2) - cw/8,
                          cy - ch / 2 - cw/8,
                          cw + cw/4, ch + cw/4)
             cr.fill()
 
-            cr.set_source_rgb(1, 0, 0)
+            cr.set_source_rgb(0.75, 0, 0)
+            cr.rectangle(cx - cw / 2 - w/2 + i * (cw + cw / 2),
+                         cy - ch / 2,
+                         cw, ch)
+            cr.fill()
+        elif lit2 == i or lit2 == -i:
+            cr.set_source_rgb(0.25, 0, 0)
+            cr.rectangle(cx - cw / 2 - w/2 + i * (cw + cw / 2) - cw/16,
+                         cy - ch / 2 - cw/16,
+                         cw + cw/8, ch + cw/8)
+            cr.fill()
+
+            cr.set_source_rgb(0.5, 0, 0)
             cr.rectangle(cx - cw / 2 - w/2 + i * (cw + cw / 2),
                          cy - ch / 2,
                          cw, ch)
@@ -62,7 +88,7 @@ def draw(ctx):
 if __name__ == "__main__":
     applet = Applet()
     applet.set_title("Knight Rider")
-    applet.run_animation(draw, 1000 / 12)
+    applet.run_animation(draw, 1000 / 16)
 
 
 # EOF #
