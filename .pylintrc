@@ -1,2 +1,2 @@
 [MESSAGES CONTROL]
-disable=invalid-name,missing-docstring,too-many-instance-attributes,too-few-public-methods,no-self-use,too-many-arguments,unused-variable,too-many-locals
+disable=invalid-name,missing-docstring,too-many-instance-attributes,too-few-public-methods,no-self-use,too-many-arguments,unused-variable,too-many-locals,star-args,global-statement
