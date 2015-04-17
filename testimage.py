@@ -36,7 +36,7 @@ def draw(ctx):
     # draw checkboard pattern
     cr.set_source_rgb(0.6, 0.6, 0.6)
     for y in range(0, 8):
-        for x in range(0 + y%2, 8, 2):
+        for x in range(0 + y % 2, 8, 2):
             cr.rectangle(x * width/8, y * height/8, width/8, height/8)
             cr.fill()
 
