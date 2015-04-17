@@ -33,11 +33,11 @@ class Applet:
         self.drawing_area = Gtk.DrawingArea()
         self.drawing_area.show()
 
-        self.button = Gtk.Button("Reset")
-        self.button.show()
+        self.reset_button = Gtk.Button("Reset")
+        self.reset_button.show()
 
         self.vbox.pack_start(self.drawing_area, True, True, 0)
-        self.vbox.pack_start(self.button, False, True, 0)
+        self.vbox.pack_start(self.reset_button, False, True, 0)
         self.vbox.show()
 
         self.window.connect("key-press-event", self.on_key_press)
@@ -53,6 +53,11 @@ class Applet:
                 window.unfullscreen()
             else:
                 window.fullscreen()
+        elif event.keyval == Gdk.KEY_h:
+            if self.reset_button.is_visible():
+                self.reset_button.hide()
+            else:
+                self.reset_button.show()
         elif event.keyval == Gdk.KEY_Escape or event.keyval == Gdk.KEY_q:
             Gtk.main_quit()
 
@@ -68,7 +73,7 @@ class Applet:
                                   self.random))
         self.drawing_area.connect("draw", on_draw)
 
-        self.button.connect("clicked", lambda ev: self.drawing_area.queue_draw())
+        self.reset_button.connect("clicked", lambda ev: self.drawing_area.queue_draw())
 
         self.window.present()
         Gtk.main()
@@ -94,7 +99,7 @@ class Applet:
             nonlocal time
             time = 0
             self.window.queue_draw()
-        self.button.connect("clicked", lambda ev: on_reset())
+        self.reset_button.connect("clicked", lambda ev: on_reset())
 
         def on_timeout():
             nonlocal time
