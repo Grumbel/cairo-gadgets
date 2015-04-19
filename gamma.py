@@ -46,8 +46,20 @@ class Rect:
     def centery(self):
         return self.top + self.height / 2
 
-    def __iter__(self):
-        return iter([self.left, self.top, self.width, self.height])
+    def __len__(self):
+        return 4
+
+    def __getitem__(self, i):
+        if i == 0:
+            return self.left
+        elif i == 1:
+            return self.top
+        elif i == 2:
+            return self.width
+        elif i == 3:
+            return self.height
+        else:
+            raise IndexError('list index out of range')
 
 
 class Color:
@@ -57,8 +69,18 @@ class Color:
         self.g = g
         self.b = b
 
-    def __iter__(self):
-        return iter([self.r, self.g, self.b])
+    def __len__(self):
+        return 3
+
+    def __getitem__(self, i):
+        if i == 0:
+            return self.r
+        elif i == 1:
+            return self.g
+        elif i == 2:
+            return self.b
+        else:
+            raise IndexError('list index out of range')
 
 
 g_current_screen = 0
