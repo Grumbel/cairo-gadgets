@@ -30,10 +30,10 @@ Animation can be done via:
 Screenshots
 -----------
 
-![Landscape screenshot](screenshot_landscape.png)
+![Landscape screenshot](screenshots/screenshot_landscape.png)
 
-![Sprial screenshot](screenshot_spiral.png)
+![Sprial screenshot](screenshots/screenshot_spiral.png)
 
-![Shapes screenshot](screenshot_shapes.png)
+![Shapes screenshot](screenshots/screenshot_shapes.png)
 
-![Film Countdown screenshot](screenshot_filmcountdown.png)
+![Film Countdown screenshot](screenshots/screenshot_filmcountdown.png)
