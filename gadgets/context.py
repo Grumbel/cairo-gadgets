@@ -17,13 +17,14 @@
 
 class Context:
 
-    def __init__(self, cr, width, height, mouse_x, mouse_y, time, rnd):
+    def __init__(self, cr, width, height, mouse_x, mouse_y, time, dt, rnd):
         self.cr = cr
         self.width = width
         self.height = height
         self.mouse_x = mouse_x
         self.mouse_y = mouse_y
         self.time = time
+        self.dt = dt
         self.random = rnd
 
 

@@ -70,6 +70,7 @@ class Applet:
                                   pointer[0],
                                   pointer[1],
                                   0,
+                                  0,
                                   self.random))
         self.drawing_area.connect("draw", on_draw)
 
@@ -92,6 +93,7 @@ class Applet:
                                   pointer[0],
                                   pointer[1],
                                   time,
+                                  msec,
                                   self.random))
         self.drawing_area.connect("draw", on_draw)
 
