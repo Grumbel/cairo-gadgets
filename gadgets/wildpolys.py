@@ -19,7 +19,7 @@
 
 import random
 import types
-from applet import Applet
+from cairogadget import Applet
 
 
 class WildPolys:

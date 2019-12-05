@@ -20,7 +20,7 @@
 import cairo
 import math
 
-from applet import Applet
+from cairogadget import Applet
 
 
 def film_countdown(context, second, frame, frames):

@@ -19,7 +19,7 @@
 
 import math
 import cairo
-from applet import Applet
+from cairogadget import Applet
 
 
 class Rect:

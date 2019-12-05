@@ -19,7 +19,7 @@ import os
 import random
 import tempfile
 import cairo
-from context import Context
+from cairogadget.context import Context
 
 
 class GifApplet:

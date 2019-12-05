@@ -17,7 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from applet import Applet
+from cairogadget import Applet
 
 
 class Crosshair:

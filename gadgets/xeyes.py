@@ -18,7 +18,7 @@
 
 
 import math
-from applet import Applet
+from cairogadget import Applet
 
 
 def draw_eye(ctx, x, y):

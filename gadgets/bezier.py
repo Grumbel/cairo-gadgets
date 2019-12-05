@@ -20,7 +20,7 @@
 import math
 import random
 
-from applet import Applet
+from cairogadget import Applet
 
 
 def lerp(p1, p2, t):
@@ -49,9 +49,9 @@ class Bezier:
 
     def setup_points(self):
         self.points = []
-        for i in range(20):
-                self.points.append((random.randint(0, 640),
-                                    random.randint(0, 480)))
+        for i in range(5):
+                self.points.append((random.randint(0, 1280),
+                                    random.randint(0, 720)))
         self.curve = []
         for i in range(250+1):
             self.curve.append(bezier(self.points, i/250.0))
@@ -59,6 +59,11 @@ class Bezier:
 
     def draw(self, ctx):
         cr = ctx.cr
+
+        cr.set_source_rgb(1, 1, 1)
+        cr.paint()
+
+        cr.set_line_width(4.0)
 
         self.t += ctx.dt / 5000.0
 
@@ -91,9 +96,9 @@ class Bezier:
 
 if __name__ == "__main__":
     applet = Applet()
-    applet.set_size(640, 480)
+    applet.set_size(1280, 720)
     applet.set_title("Bezier")
-    applet.run_animation(Bezier().draw, 1000 / 30)
+    applet.run_animation(Bezier().draw, 1000 / 60)
 
 
 # EOF #

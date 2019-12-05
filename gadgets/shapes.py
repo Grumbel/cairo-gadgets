@@ -19,7 +19,7 @@
 
 import math
 
-from applet import Applet
+from cairogadget import Applet
 
 
 class ShapedGUI:

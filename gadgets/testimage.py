@@ -88,7 +88,7 @@ def draw(ctx):
 
 
 if __name__ == "__main__":
-    from applet import Applet
+    from cairogadget import Applet
     applet = Applet()
     applet.run(draw)
 

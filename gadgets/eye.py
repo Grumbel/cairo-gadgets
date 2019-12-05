@@ -20,8 +20,8 @@
 import math
 import random
 
-from applet import Applet
-from gif_applet import GifApplet
+from cairogadget import Applet
+from cairogadget.gif_applet import GifApplet
 
 class Eye:
 
