@@ -373,10 +373,14 @@ def draw_fs_gamma_ramp(ctx):
                         Rect(x, rect.top, 200, rect.width))
 
 
-if __name__ == "__main__":
+def main():
     applet = Applet()
     applet.set_size(1280, 960)
     applet.run(draw)
+
+
+if __name__ == "__main__":
+    main()
 
 
 # EOF #

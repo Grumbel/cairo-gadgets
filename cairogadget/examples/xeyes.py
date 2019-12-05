@@ -62,11 +62,15 @@ def draw(ctx):
     draw_eye(ctx, ctx.width / 2 + ctx.width / 4, ctx.height / 2)
 
 
-if __name__ == "__main__":
+def main():
     applet = Applet()
     applet.set_title("XEyes")
     applet.set_size(256, 256)
     applet.run_animation(draw, 1000 / 30)
+
+
+if __name__ == "__main__":
+    main()
 
 
 # EOF #

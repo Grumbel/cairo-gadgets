@@ -125,10 +125,14 @@ class Landscape:
         cr.fill()
 
 
-if __name__ == "__main__":
+def main():
     applet = Applet()
     applet.set_size(640, 480)
     applet.run(Landscape().draw)
+
+
+if __name__ == "__main__":
+    main()
 
 
 # EOF #

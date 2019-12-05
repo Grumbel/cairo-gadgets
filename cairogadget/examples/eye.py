@@ -56,7 +56,8 @@ class Eye:
             cr.stroke()
             cr.restore()
 
-if __name__ == "__main__":
+
+def main():
     applet = Applet()
     applet.set_size(512, 512)
     applet.set_title("Eye")

@@ -94,11 +94,15 @@ class Bezier:
         cr.fill()
 
 
-if __name__ == "__main__":
+def main():
     applet = Applet()
     applet.set_size(1280, 720)
     applet.set_title("Bezier")
     applet.run_animation(Bezier().draw, 1000 / 60)
+
+
+if __name__ == "__main__":
+    main()
 
 
 # EOF #

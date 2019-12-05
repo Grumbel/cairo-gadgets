@@ -85,10 +85,14 @@ def draw(ctx):
             cr.fill()
 
 
-if __name__ == "__main__":
+def main():
     applet = Applet()
     applet.set_title("Knight Rider")
     applet.run_animation(draw, 1000 / 16)
+
+
+if __name__ == "__main__":
+    main()
 
 
 # EOF #

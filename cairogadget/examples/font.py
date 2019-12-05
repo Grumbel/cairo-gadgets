@@ -96,10 +96,14 @@ def draw(context):
     cr.fill()
 
 
-if __name__ == "__main__":
+def main():
     applet = Applet()
     applet.set_size(640, 480)
     applet.run(draw)
+
+
+if __name__ == "__main__":
+    main()
 
 
 # EOF #

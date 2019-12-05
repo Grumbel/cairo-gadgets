@@ -51,10 +51,14 @@ class Labyrinth:
             self.draw_room(ctx, x + w / 2, y + h / 2, w / 2, h / 2, depth + 1)
 
 
-if __name__ == "__main__":
+def main():
     applet = Applet()
     applet.set_size(512, 512)
     applet.run(Labyrinth().draw)
+
+
+if __name__ == "__main__":
+    main()
 
 
 # EOF #

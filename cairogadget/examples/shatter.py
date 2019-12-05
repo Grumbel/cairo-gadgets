@@ -64,10 +64,14 @@ def draw_line(ctx, cr, a, b, r):
         draw_line(ctx, cr, m, b, r - 1)
 
 
-if __name__ == "__main__":
+def main():
     applet = Applet()
     applet.set_size(256, 256)
     applet.run(draw)
+
+
+if __name__ == "__main__":
+    main()
 
 
 # EOF #

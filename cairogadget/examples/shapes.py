@@ -71,11 +71,15 @@ class ShapedGUI:
             cr.show_text("Loading...")
 
 
-if __name__ == "__main__":
+def main():
     applet = Applet()
     applet.set_size(854, 480)
     applet.set_title("Loading Screen")
     applet.run_animation(ShapedGUI().draw, 1000 / 60)
+
+
+if __name__ == "__main__":
+    main()
 
 
 # EOF #

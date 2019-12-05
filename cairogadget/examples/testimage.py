@@ -87,10 +87,14 @@ def draw(ctx):
     cr.show_text(text)
 
 
-if __name__ == "__main__":
+def main():
     from cairogadget import Applet
     applet = Applet()
     applet.run(draw)
+
+
+if __name__ == "__main__":
+    main()
 
 
 # EOF #

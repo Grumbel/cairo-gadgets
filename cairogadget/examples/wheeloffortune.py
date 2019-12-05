@@ -84,10 +84,14 @@ def draw(ctx):
     cr.restore()
 
 
-if __name__ == "__main__":
+def main():
     applet = Applet()
     applet.set_title("Wheel of Fortune")
     applet.run_animation(draw, 1000 / 60)
+
+
+if __name__ == "__main__":
+    main()
 
 
 # EOF #

@@ -26,11 +26,15 @@ def draw(ctx):
     cr.show_text("Hello World")
 
 
-if __name__ == "__main__":
+def main():
     applet = Applet()
     applet.set_size(854, 480)
     applet.set_title("Tunnel")
     applet.run(draw)
+
+
+if __name__ == "__main__":
+    main()
 
 
 # EOF #

@@ -58,11 +58,15 @@ class GridGadget:
         cr.stroke()
 
 
-if __name__ == "__main__":
+def main():
     applet = Applet()
     applet.set_title("Grid Effect")
     applet.set_size(640, 480)
     applet.run(GridGadget().draw)
+
+
+if __name__ == "__main__":
+    main()
 
 
 # EOF #

@@ -37,11 +37,15 @@ class Tunnel:
             cr.stroke()
 
 
-if __name__ == "__main__":
+def main():
     applet = Applet()
     applet.set_size(854, 480)
     applet.set_title("Tunnel")
     applet.run_animation(Tunnel().draw, 1000 / 24)
+
+
+if __name__ == "__main__":
+    main()
 
 
 # EOF #

@@ -97,11 +97,15 @@ def on_draw(ctx):
     film_countdown(ctx, second, frame, 24)
 
 
-if __name__ == "__main__":
+def main():
     applet = Applet()
     applet.set_size(854, 480)
     applet.set_title("Film Countdown")
     applet.run_animation(on_draw, 1000 / 24)
+
+
+if __name__ == "__main__":
+    main()
 
 
 # EOF #
