@@ -17,20 +17,31 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import os
+
 from setuptools import setup, find_packages
 
 
-setup(name='cairo-gadgets',
+def find_cairogadget_examples():
+    results = []
+    for filename in os.listdir("cairogadget/examples/"):
+        if filename.endswith(".py") and filename != "__init__.py":
+            name, ext = os.path.splitext(filename)
+            results.append('cairogadget-{} = cairogadget.examples.{}:main'.format(name, name))
+    print(results)
+    return results
+
+
+setup(name='cairogadget',
       version='0.1.0',
       scripts=[],
       entry_points={
-          'console_scripts': [
-          ],
-          'gui_scripts': []
-          },
+          'gui_scripts': find_cairogadget_examples()
+      },
       install_requires=[
+          'pycairo'
       ],
-      packages=['cairogadget'],
+      packages=find_packages(),
 )
 
 
