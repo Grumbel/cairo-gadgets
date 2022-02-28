@@ -3,3 +3,4 @@
 /.pylint/
 /build/
 /cairogadget.egg-info/
+/result
