@@ -10,23 +10,33 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
-      in rec {
-        packages = flake-utils.lib.flattenTree {
+      in {
+        packages = rec {
+          default = cairogadget;
+
           cairogadget = pkgs.python3Packages.buildPythonPackage {
             pname = "cairogadget";
             version = "0.1.0";
+
             src = nixpkgs.lib.cleanSource ./.;
-            nativeBuildInputs = [
-              pkgs.gobject-introspection
-              pkgs.gtk3
-              pkgs.wrapGAppsHook
+
+            nativeBuildInputs = with pkgs; [
+              gobject-introspection
+              gtk3
+              wrapGAppsHook
+
+              pylint
+              python3Packages.flake8
+              python3Packages.mypy
+              python3Packages.types-setuptools
             ];
-            propagatedBuildInputs = [
-              pkgs.python3Packages.pygobject3
-              pkgs.python3Packages.pycairo
+
+            propagatedBuildInputs = with pkgs; [
+              python3Packages.pygobject3
+              python3Packages.pycairo
             ];
            };
         };
-        defaultPackage = packages.cairogadget;
-      });
+      }
+    );
 }
