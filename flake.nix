@@ -2,7 +2,7 @@
   description = "A collection of random gadgets written in Cairo";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
@@ -24,7 +24,9 @@
               gobject-introspection
               gtk3
               wrapGAppsHook
+            ];
 
+            nativeCheckInputs = with pkgs; [
               pylint
               python3Packages.flake8
               python3Packages.mypy
